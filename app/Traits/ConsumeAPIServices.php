@@ -25,4 +25,3 @@ trait ConsumeAPIServices
         return $response;
     }
 }
-?>
