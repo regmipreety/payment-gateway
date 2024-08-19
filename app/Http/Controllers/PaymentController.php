@@ -39,7 +39,9 @@ class PaymentController extends Controller
     }
 
     public function approval(Request $request){
-        
+        $paymentPlatform = resolve(PaypalService::class);
+
+        return $paymentPlatform->handleApproval();
     }
 
     public function cancelled(Request $request){
