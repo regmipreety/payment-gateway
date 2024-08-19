@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Traits\ConsumeAPIServices;
+use Illuminate\http\Request;
 
 class PaypalService
 {
@@ -34,6 +35,14 @@ class PaypalService
         return "Basic {$credentials}";
     }
 
+    public function handlePayment(Request $request)
+    {
+        $order = $this->createOrder($request->value, $request->currency);
+        $orderLinks = collect($order->links);
+        $approve = $orderLinks->where('rel','approve')->first();
+        return redirect($approve->href);
+    }
+
     public function createOrder($value, $currency)
     {
         return $this->makeRequest(
@@ -43,7 +52,7 @@ class PaypalService
             [
                 'intent' => 'CAPTURE',
                 'purchase_units' => [
-                    0 => [
+                    [
                         'amount' => [
                             'currency_code' => strtoupper($currency),
                             'value' => $value
@@ -61,6 +70,20 @@ class PaypalService
             ],
             [],
             $isJsonRequest = true,
+
+        );
+    }
+
+    public function capturePayment($approvalId)
+    {
+        return $this->makeRequest(
+            'POST',
+            "/v2/checkout/orders/{$approvalId}/capture",
+            [],
+            [],
+            [
+                'Content-Type' => 'application/json'
+            ],
 
         );
     }
