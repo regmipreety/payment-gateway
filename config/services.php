@@ -42,8 +42,8 @@ return [
     ],
     'stripe'=>[
         'base_uri'=> env('STRIPE_BASE_URI'),
-        'client_id'=> env('STRIPE_KEY'),
-        'client_secret'=> env('STRIPE_SECRET'),
+        'key'=> env('STRIPE_KEY'),
+        'secret'=> env('STRIPE_SECRET'),
         'class' => App\Services\StripeService::class,
     ],
 
