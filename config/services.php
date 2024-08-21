@@ -34,5 +34,17 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'paypal' =>[
+        'base_uri'=> env('PAYPAL_BASE_URI'),
+        'client_id'=> env('PAYPAL_CLIENT_ID'),
+        'client_secret'=> env('PAYPAL_CLIENT_SECRET'),
+        'class' => App\Services\PaypalService::class,
+    ],
+    'stripe'=>[
+        'base_uri'=> env('STRIPE_BASE_URI'),
+        'client_id'=> env('STRIPE_KEY'),
+        'client_secret'=> env('STRIPE_SECRET'),
+        'class' => App\Services\StripeService::class,
+    ],
 
 ];
