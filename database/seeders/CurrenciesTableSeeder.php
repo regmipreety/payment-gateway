@@ -17,6 +17,7 @@ class CurrenciesTableSeeder extends Seeder
             'usd',
             'eur',
             'aud',
+            'jpy',
         ];
 
         foreach( $currencies as $currency) {

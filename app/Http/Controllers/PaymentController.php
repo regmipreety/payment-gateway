@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Resolvers\PaymentPlatformResolver;
 use App\Services\PaypalService;
 use Illuminate\Http\Request;
 
 
 class PaymentController extends Controller
 {
+    protected $paymentPlatformResolver;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(PaymentPlatformResolver $paymentPlatformResolver)
     {
         $this->middleware('auth');
+        $this->paymentPlatformResolver = $paymentPlatformResolver;
     }
 
     /**
@@ -25,27 +28,42 @@ class PaymentController extends Controller
      */
     public function pay(Request $request)
     {
-       $rules = [
-        'value'=>['required','numeric','min:5'],
-        'currency'=>['required','exists:currencies,iso'],
-        'payment_platform'=>['required','exists:payment_platforms,name'],
-       ];
+        $rules = [
+            'value' => ['required', 'numeric', 'min:5'],
+            'currency' => ['required', 'exists:currencies,iso'],
+            'payment_platform' => ['required', 'exists:payment_platforms,name'],
+        ];
 
-       $request->validate($rules);
+        $request->validate($rules);
+        $paymentPlatform = $this->paymentPlatformResolver
+            ->resolveService($request->payment_platform);
 
-       $paymentPlatform = resolve(PaypalService::class);
-       $payment = $paymentPlatform->handlePayment($request);
-       return $payment;
+        Session()->put('paymentPlatform', $request->payment_platform);
+        $payment = $paymentPlatform->handlePayment($request);
+        return $payment;
     }
 
-    public function approval(Request $request){
-        $paymentPlatform = resolve(PaypalService::class);
+    public function approval()
+    {
+        if (session()->has('paymentPlatform')) {
+            $paymentPlatform = $this->paymentPlatformResolver
+                ->resolveService(session()->get('paymentPlatform'));
 
-        return $paymentPlatform->handleApproval();
+            return $paymentPlatform->handleApproval();
+        } else {
+            return redirect()
+                ->route('home')
+                ->withErrors('We cannot retrieve your payment platform');
+        }
+
+
     }
 
-    public function cancelled(Request $request){
-
+    public function cancelled()
+    {
+        return redirect()
+            ->route('home')
+            ->withErrors('The Payment was cancelled.');
     }
 
 }
