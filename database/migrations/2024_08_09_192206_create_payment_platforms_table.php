@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('namelower',50);
             $table->string('image');
+            $table->boolean('subscription_enabled')->default(false);
             $table->timestamps();
         });
     }

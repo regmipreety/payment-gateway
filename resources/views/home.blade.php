@@ -33,20 +33,37 @@
                                 <div class="form-group" id="toggler">
                                     <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
                                         @foreach ($paymentPlatforms as $p)
-                                            <label class="btn btn-outline-secondary rounded m-2 p-1"  data-bs-target="#{{$p->name}}Collapse" data-bs-toggle="collapse">
-                                                <input type="radio" name="payment_platform" value="{{$p->name}}" required>
+                                            <label class="btn btn-outline-secondary rounded m-2 p-1"
+                                                data-bs-target="#{{$p->name}}Collapse" data-bs-toggle="collapse">
+                                                <input type="radio" name="payment_platform" value="{{$p->name}}" class="d-none" required>
                                                 <img class="img-thumbnail" src="{{asset($p->image)}}" alt="image">
                                             </label>
 
                                         @endforeach
                                     </div>
                                     @foreach ($paymentPlatforms as $p)
-                                            <div id="{{$p->name}}Collapse" class="collapse" data-bs-parent="#toggler">
-                                                @includeIf('components.'.strtolower($p->name).'-collapse')
-                                            </div>
+                                        <div id="{{$p->name}}Collapse" class="collapse" data-bs-parent="#toggler">
+                                            @includeIf('components.' . strtolower($p->name) . '-collapse')
+                                        </div>
 
-                                        @endforeach
+                                    @endforeach
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <p class="border-bottom border-primary rounded">
+                                    @if (!optional(auth()->user())->hasActiveSubscription())
+                                        <p>Would you like a discount every time? <a href="{{route('subscribe.show')}}">Subscribe</a></p>
+                                        
+                                    @else 
+
+                                          <p>You get a <strong>10% off </strong> as part of your subscription (this will be applied in the
+                                                checkout.)</p>
+
+                                    @endif
+
+                                </p>
                             </div>
                         </div>
                         <div class="text-center">

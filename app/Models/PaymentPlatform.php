@@ -13,5 +13,6 @@ class PaymentPlatform extends Model
         'name',
         'namelower',
         'image',
+        'subscription_enabled'
     ];
 }
