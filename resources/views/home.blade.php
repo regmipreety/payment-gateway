@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary btn-lg">
+                            <button id="payButton" class="btn btn-primary btn-lg">
                                 Pay
                             </button>
                         </div>
