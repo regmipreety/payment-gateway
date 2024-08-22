@@ -8,7 +8,7 @@
                 <div class="card-header">Welcome to our Page</div>
 
                 <div class="card-body">
-                   This is a payment processing system, using payment platforms.
+                    This is a payment processing system, using payment platforms.
                 </div>
             </div>
         </div>

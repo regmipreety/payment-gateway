@@ -57,6 +57,12 @@ class StripeService
                     ->route('home')
                     ->withSuccess(['payment' => "Thanks, {$name}. We received your {$amount}{$currency} payment."]);
             }
+            if($confirmation->status === 'requires_action') {
+                $client_secret = $confirmation->client_secret;
+                return view('stripe.3d-secure')->with([
+                    'clientSecret' => $client_secret
+                ]);
+            }
         }
         return redirect()
             ->route('home')
