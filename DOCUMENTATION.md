@@ -24,3 +24,6 @@
 <td>The UnionPay card has a variable length of 13-19 digits.	Fill out the credit card form using the credit card number with any expiration, CVC, and postal code.</td>
 </tr>
 </table>
+
+## Paypal Subscription: 
+<a href="https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create">Official Documentation</a>

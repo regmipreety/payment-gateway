@@ -34,16 +34,20 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-    'paypal' =>[
-        'base_uri'=> env('PAYPAL_BASE_URI'),
-        'client_id'=> env('PAYPAL_CLIENT_ID'),
-        'client_secret'=> env('PAYPAL_CLIENT_SECRET'),
+    'paypal' => [
+        'base_uri' => env('PAYPAL_BASE_URI'),
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'client_secret' => env('PAYPAL_CLIENT_SECRET'),
         'class' => App\Services\PaypalService::class,
+        'plans' => [
+            'monthly' => env('PAYPAL_MONTHLY_PLAN'),
+            'yearly' => env('PAYPAL_YEARLY_PLAN'),
+        ],
     ],
-    'stripe'=>[
-        'base_uri'=> env('STRIPE_BASE_URI'),
-        'key'=> env('STRIPE_KEY'),
-        'secret'=> env('STRIPE_SECRET'),
+    'stripe' => [
+        'base_uri' => env('STRIPE_BASE_URI'),
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
         'class' => App\Services\StripeService::class,
     ],
 
