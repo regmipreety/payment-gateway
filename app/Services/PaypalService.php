@@ -18,7 +18,7 @@ class PaypalService
         $this->baseUri = config('services.paypal.base_uri');
         $this->clientId = config('services.paypal.client_id');
         $this->clientSecret = config('services.paypal.client_secret');
-        $this->plans=config('services.paypal.plans');
+        $this->plans = config('services.paypal.plans');
     }
 
     public function resolveAuthorization(&$queryParams, &$formParams, &$headers)
@@ -65,9 +65,17 @@ class PaypalService
     }
 
     public function handleSubscription(Request $request)
-{
-    
-}
+    {
+        $subscription = $this->createSubscription(
+            $request->plan,
+            $request->user()->name,
+            $request->user()->email,
+        );
+        $subscriptionLinks = collect($subscription->links);
+        $approve = $subscriptionLinks->where('rel', 'approve')->first();
+        session()->put('subscriptionId', $subscription->id);
+        return redirect($approve->href);
+    }
 
     public function createOrder($value, $currency)
     {
@@ -116,24 +124,25 @@ class PaypalService
         );
     }
 
-    public function createSubscription($planSlug, $name, $email){
+    public function createSubscription($planSlug, $name, $email)
+    {
         return $this->makeRequest(
             'POST',
             '/v1/billing/subscriptions',
             [],
             [
-                'plan_id'=> $this->plans[$planSlug],
-                'subscriber'=>[
-                    'name'=>[
-                        'given_name'=>$name,
+                'plan_id' => $this->plans[$planSlug],
+                'subscriber' => [
+                    'name' => [
+                        'given_name' => $name,
                     ],
-                    'email'=> $email,
+                    'email' => $email,
                 ],
                 'application_context' => [
                     'brand_name' => config('app.name'),
                     'shipping_preference' => 'NO_SHIPPING',
                     'user_action' => 'SUBSCRIBE_NOW',
-                    'return_url' => route('subscribe.approval',['plan'=> $planSlug]),
+                    'return_url' => route('subscribe.approval', ['plan' => $planSlug]),
                     'cancel_url' => route('subscribe.cancelled'),
                 ]
             ],

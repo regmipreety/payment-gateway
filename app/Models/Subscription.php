@@ -14,9 +14,8 @@ class Subscription extends Model
         'plan_id'
     ];
 
-
-    protected $dates = [
-        'active_until',
+    protected $casts = [
+        'active_until' => 'datetime',
     ];
 
     public function user()
