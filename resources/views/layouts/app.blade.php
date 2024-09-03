@@ -38,7 +38,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         
-                        @if (!(auth()->user())->hasActiveSubscription())
+                        @if (!optional(auth()->user())->hasActiveSubscription())
                             <li class="nav-item">
                                 <a class="btn btn-outline-primary" href="{{route('subscribe.show')}}">Subscribe</a>
                             </li>
