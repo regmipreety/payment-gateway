@@ -23,6 +23,11 @@ class User extends Authenticatable
     ];
 
     /**
+     * @var Subscription subscription
+     */
+    public $subscription;
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>

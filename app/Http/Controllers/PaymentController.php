@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    /** 
+     * @var PaymentPlatformResolver paymentPlatformResolver
+     */
     protected $paymentPlatformResolver;
     /**
      * Create a new controller instance.
@@ -39,8 +42,8 @@ class PaymentController extends Controller
             ->resolveService($request->payment_platform);
 
         Session()->put('paymentPlatform', $request->payment_platform);
-        $payment = $paymentPlatform->handlePayment($request);
-        return $payment;
+        return $paymentPlatform->handlePayment($request);
+        
     }
 
     public function approval()
