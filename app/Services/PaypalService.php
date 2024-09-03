@@ -8,9 +8,21 @@ class PaypalService
 {
     use ConsumeAPIServices;
 
+    /**
+     * @var string baseUri
+     */
     protected $baseUri;
+    /**
+     * @var string clientId
+     */
     protected $clientId;
+    /**
+     * @var string clientSecret
+     */
     protected $clientSecret;
+    /**
+     * @var string plans
+     */
     protected $plans;
 
     public function __construct()

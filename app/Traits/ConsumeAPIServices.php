@@ -5,6 +5,16 @@ use GuzzleHttp\Client;
 
 trait ConsumeAPIServices
 {
+    /**
+     * Summary of makeRequest
+     * @param mixed $method
+     * @param mixed $requestUrl
+     * @param mixed $queryParams
+     * @param mixed $formParams
+     * @param mixed $headers
+     * @param boolean $isJsonRequest
+     * @return mixed
+     */
     public function makeRequest($method, $requestUrl, $queryParams = [], $formParams = [], $headers = [], $isJsonRequest = false)
     {
         $client = new Client([

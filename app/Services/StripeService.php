@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 class StripeService
 {
     use ConsumeAPIServices;
-
+    /**
+     * BaseUrl of the API
+     * @var string baseUri
+     */
     protected $baseUri;
+     /**
+     * @var string key
+     */
     protected $key;
+     /**
+     * @var string secret
+     */
     protected $secret;
 
     public function __construct()
