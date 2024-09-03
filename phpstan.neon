@@ -11,5 +11,7 @@ parameters:
     bootstrapFiles:
         - %rootDir%/../../../vendor/autoload.php
         - %rootDir%/../../../bootstrap/app.php
+    ignoreErrors:
+    - '#Undefined variable: \$this#'
     
     

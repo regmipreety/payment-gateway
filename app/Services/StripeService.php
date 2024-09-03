@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Traits\ConsumeAPIServices;
-use Illuminate\http\Request;
+use Illuminate\Http\Request;
 
 class StripeService
 {
